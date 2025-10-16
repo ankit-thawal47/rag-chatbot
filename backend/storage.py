@@ -13,19 +13,36 @@ def get_storage_client():
         
         if credentials_json and credentials_json.strip().startswith('{'):
             try:
-                # Try to parse JSON string credentials
-                # First, try to fix common escape issues
+                # Clean up the JSON string more thoroughly
+                # Remove extra spaces that might have been introduced
+                import re
+                # Remove spaces that are breaking JSON structure
+                credentials_json = re.sub(r'(?<=[a-zA-Z0-9])\s+(?=[a-zA-Z0-9])', '', credentials_json)
+                # Fix common escape issues
                 credentials_json = credentials_json.replace('\\n', '\n').replace('\\"', '"')
+                
                 credentials_dict = json.loads(credentials_json)
                 credentials = service_account.Credentials.from_service_account_info(credentials_dict)
                 client = storage.Client(project=project_id, credentials=credentials)
                 print("✅ Successfully initialized GCS client with JSON credentials")
             except json.JSONDecodeError as json_err:
                 print(f"JSON parsing error: {json_err}")
-                print(f"Credentials string preview: {credentials_json[:100]}...")
-                # Fallback to default credentials
-                client = storage.Client(project=project_id)
-                print("⚠️ Using default GCS credentials")
+                print(f"Credentials string length: {len(credentials_json)}")
+                print(f"First 200 chars: {credentials_json[:200]}")
+                # Try one more time with aggressive cleaning
+                try:
+                    # Remove all extra whitespace within the JSON
+                    cleaned = re.sub(r'\s+', ' ', credentials_json.strip())
+                    cleaned = cleaned.replace('\\n', '\n').replace('\\"', '"')
+                    credentials_dict = json.loads(cleaned)
+                    credentials = service_account.Credentials.from_service_account_info(credentials_dict)
+                    client = storage.Client(project=project_id, credentials=credentials)
+                    print("✅ Successfully initialized GCS client with cleaned JSON credentials")
+                except Exception as cleanup_err:
+                    print(f"Cleanup attempt failed: {cleanup_err}")
+                    # Fallback to default credentials
+                    client = storage.Client(project=project_id)
+                    print("⚠️ Using default GCS credentials")
         else:
             # Use file path or default credentials
             client = storage.Client(project=project_id)
