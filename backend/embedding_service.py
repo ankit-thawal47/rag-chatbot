@@ -68,7 +68,6 @@ def generate_embedding(text: str) -> List[float]:
             input=text
         )
         embedding = response.data[0].embedding
-        print(f"Generated embedding with {len(embedding)} dimensions")
         return embedding
     except Exception as e:
         print(f"Error generating embedding: {e}")

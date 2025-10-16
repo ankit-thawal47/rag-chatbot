@@ -276,17 +276,6 @@ export default function Upload() {
             )}
           </div>
         </div>
-        
-        {/* Instructions */}
-        <div className="mt-8 bg-blue-50 border border-blue-200 rounded-lg p-6">
-          <h3 className="text-lg font-semibold text-blue-900 mb-3">📋 Next Steps</h3>
-          <div className="space-y-2 text-blue-800">
-            <p>1. ✅ Upload your documents (PDF, DOCX, or PPTX files)</p>
-            <p>2. ⏳ Wait for processing to complete (status will show "completed")</p>
-            <p>3. 💬 Go to the Chat page to ask questions about your documents</p>
-            <p>4. 🎯 Get AI-powered answers with source citations</p>
-          </div>
-        </div>
       </div>
     </div>
   );

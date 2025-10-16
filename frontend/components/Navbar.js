@@ -36,7 +36,7 @@ export default function Navbar() {
         <div className="flex justify-between items-center py-4">
           {/* Logo/Title */}
           <div className="flex items-center">
-            <h1 className="text-xl font-bold text-gray-900">RAG Documents</h1>
+            <h1 className="text-xl font-bold text-gray-900">Ankit-s assignment</h1>
           </div>
 
           {/* Navigation Links */}

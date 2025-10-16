@@ -121,11 +121,7 @@ export default function Chat() {
   };
 
   const exampleQuestions = [
-    "What are the key findings in my documents?",
-    "Can you summarize the main points?",
-    "What information do you have about [specific topic]?",
-    "Tell me about the conclusions or recommendations",
-    "What data or statistics are mentioned?"
+    "Where is XYZ?"
   ];
 
   return (
@@ -278,11 +274,6 @@ export default function Chat() {
               </button>
             </div>
           </div>
-        </div>
-        
-        {/* Help text */}
-        <div className="mt-4 text-center text-sm text-gray-500">
-          <p>💡 Tip: Ask specific questions about your documents for the best results</p>
         </div>
       </div>
     </div>
