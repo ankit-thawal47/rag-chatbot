@@ -1,0 +1,1 @@
+Now give me very detailed step by step on how I can make this work, first I will deploy this on local and then on vercel+railway.

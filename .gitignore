@@ -1,0 +1,59 @@
+# Environment variables - NEVER commit these!
+*.env
+.env
+.env.local
+.env.production
+.env.development
+
+# Backend
+backend/.env
+backend/venv/
+backend/__pycache__/
+backend/*.pyc
+backend/.pytest_cache/
+backend/debug_*.py
+backend/test_*.py
+backend/fix_*.py
+backend/minimal_*.py
+
+# Frontend
+frontend/.env.local
+frontend/.env.production
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/dist/
+frontend/.vercel
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Database dumps
+*.sql.backup
+*.db
+
+# Temporary files
+temp/
+tmp/
+*.tmp
+
+# Build artifacts
+build/
+dist/
+
+# Secrets and keys
+*key*.json
+*credentials*.json
+service-account*.json

@@ -1,0 +1,38 @@
+# Render deployment configuration
+# Place this file in your repository root for easy deployment
+
+services:
+  - type: web
+    name: rag-backend
+    env: python
+    plan: starter  # Free tier - upgrade to hobby for production
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9.16
+      - key: PIP_VERSION
+        value: 23.1.2
+      
+      # Add your environment variables here
+      # Note: Use Render dashboard to set sensitive values
+      
+      - key: JWT_ALGORITHM
+        value: HS256
+      - key: JWT_EXPIRATION_HOURS
+        value: 24
+      
+      # These should be set in Render dashboard (not in this file):
+      # FIREBASE_PROJECT_ID
+      # FIREBASE_PRIVATE_KEY
+      # FIREBASE_CLIENT_EMAIL
+      # JWT_SECRET_KEY
+      # GCP_PROJECT_ID
+      # GCP_BUCKET_NAME
+      # GOOGLE_APPLICATION_CREDENTIALS (paste JSON content)
+      # SUPABASE_URL
+      # SUPABASE_KEY
+      # PINECONE_API_KEY
+      # PINECONE_ENVIRONMENT
+      # PINECONE_INDEX_NAME
+      # OPENAI_API_KEY
