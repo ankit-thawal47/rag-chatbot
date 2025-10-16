@@ -35,8 +35,8 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:3000",  # Local development
         "http://localhost:3001",  # Local development (alternative port)
-        "https://your-vercel-app.vercel.app",  # Replace with your Vercel URL
-        "https://*.vercel.app"  # Allow all Vercel preview deployments
+        "https://*.vercel.app",  # Allow all Vercel deployments
+        "*"  # Allow all origins temporarily for debugging
     ],
     allow_credentials=True,
     allow_methods=["*"],
