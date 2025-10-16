@@ -11,18 +11,31 @@ def get_storage_client():
         project_id = os.getenv('GCP_PROJECT_ID')
         credentials_json = os.getenv('GOOGLE_APPLICATION_CREDENTIALS')
         
-        if credentials_json and credentials_json.startswith('{'):
-            # Parse JSON string credentials
-            credentials_dict = json.loads(credentials_json)
-            credentials = service_account.Credentials.from_service_account_info(credentials_dict)
-            client = storage.Client(project=project_id, credentials=credentials)
+        if credentials_json and credentials_json.strip().startswith('{'):
+            try:
+                # Try to parse JSON string credentials
+                # First, try to fix common escape issues
+                credentials_json = credentials_json.replace('\\n', '\n').replace('\\"', '"')
+                credentials_dict = json.loads(credentials_json)
+                credentials = service_account.Credentials.from_service_account_info(credentials_dict)
+                client = storage.Client(project=project_id, credentials=credentials)
+                print("✅ Successfully initialized GCS client with JSON credentials")
+            except json.JSONDecodeError as json_err:
+                print(f"JSON parsing error: {json_err}")
+                print(f"Credentials string preview: {credentials_json[:100]}...")
+                # Fallback to default credentials
+                client = storage.Client(project=project_id)
+                print("⚠️ Using default GCS credentials")
         else:
             # Use file path or default credentials
             client = storage.Client(project=project_id)
+            print("⚠️ Using default GCS credentials (no JSON provided)")
         
         return client
     except Exception as e:
         print(f"Error initializing GCS client: {e}")
+        print(f"Project ID: {project_id}")
+        print(f"Credentials provided: {bool(credentials_json)}")
         raise HTTPException(status_code=500, detail="Failed to initialize cloud storage")
 
 def upload_to_gcp(file_content: bytes, gcp_path: str) -> str:
