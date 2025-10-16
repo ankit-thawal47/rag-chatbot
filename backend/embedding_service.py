@@ -181,7 +181,6 @@ def process_document_embeddings(
         update_embedding_status(doc_id, 'processing')
         
         # Step 1: Download file from GCP
-        print(f"Downloading file from GCP: {gcp_path}")
         file_content = download_from_gcp(gcp_path)
         
         # Step 2: Extract text from file
